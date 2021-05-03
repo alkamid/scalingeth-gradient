@@ -216,7 +216,7 @@ function App(props) {
 
         <Menu style={{ textAlign:"center" }} selectedKeys={[route]} mode="horizontal">
           <Menu.Item key="/">
-            <Link onClick={()=>{setRoute("/")}} to="/">GradiantDAO</Link>
+            <Link onClick={()=>{setRoute("/")}} to="/">GradientDAO</Link>
           </Menu.Item>
           <Menu.Item key="/dai">
             <Link onClick={()=>{setRoute("/dai")}} to="/dai">Dai</Link>
@@ -243,7 +243,7 @@ function App(props) {
                 and give you a form to interact with it locally
             */}
              <Contract
-              name="GradiantDao"
+              name="GradientDao"
               signer={userProvider.getSigner()}
               provider={localProvider}
               address={address}

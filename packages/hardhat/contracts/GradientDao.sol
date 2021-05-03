@@ -4,7 +4,7 @@ pragma solidity ^0.6.0;
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-contract GradiantDao is ERC1155 {
+contract GradientDao is ERC1155 {
     uint256 public constant Claim_TOKEN = 0;
     uint256 public constant YouOweMe_TOKEN = 1;
     mapping(address => string) public Seekers;

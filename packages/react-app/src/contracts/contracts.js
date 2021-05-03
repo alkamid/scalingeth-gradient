@@ -1,1 +1,1 @@
-module.exports = ["Dai","GradiantDao","YourContract"];
+module.exports = ["Dai","GradientDao","YourContract"];
