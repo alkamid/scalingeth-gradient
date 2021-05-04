@@ -2,7 +2,8 @@
 pragma solidity ^0.6.0;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
+//import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract GradientDao is ERC1155 {
     uint256 public constant Claim_TOKEN = 0;
@@ -10,10 +11,12 @@ contract GradientDao is ERC1155 {
     mapping(address => string) public Seekers;
     mapping(address => uint256) public Karma;
     mapping(address => uint256) public RoundSize;
-    IERC20 public dai;
 
-    constructor(address daiAddress) public ERC1155("https://game.example/api/item/{id}.json") {}
-    dai = IERC20(daiAddress);
+    //IERC20 public dai;
+
+    constructor() public ERC1155("https://game.example/api/item/{id}.json") {}
+
+    //dai = IERC20(daiAddress);
     //Based on Karma score calculate max round size in ETH
     function KarmaPower() internal returns (uint256) {
         return (2);
@@ -24,11 +27,14 @@ contract GradientDao is ERC1155 {
     }
 
     function BecomeLP() public payable {
+        //require(LP have first shot at funding)
         uint256 UnFundedRound = 1 ether;
         require(msg.value <= UnFundedRound, "Value exceeds roundsize");
         _mint(msg.sender, YouOweMe_TOKEN, msg.value, "");
     }
 
     //Seeker Fills Funds Burns YouOweMe_TOKEN Overflow is returned to LP
-    function CloseFundingRound() public {}
+    function CloseFundingRound() public {
+        //  _mint(LP, Claim_Token, LP_Claim_Value)
+    }
 }
