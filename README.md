@@ -9,7 +9,9 @@ required: [Node](https://nodejs.org/dist/latest-v12.x/) plus [Yarn](https://clas
 ```bash
 git clone https://github.com/alkamid/scalingeth-gradient.git
 
-cd scaffold-eth
+cd scalingeth-gradient
+
+git checkout ERC-1155
 ```
 
 ```bash
