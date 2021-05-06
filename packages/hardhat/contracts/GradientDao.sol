@@ -8,46 +8,55 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "hardhat/console.sol";
 
 contract GradientDao is ERC1155, ERC1155Holder {
-    address public admin;
     uint256 public constant Claim_TOKEN = 0;
     uint256 public constant YouOweMe_TOKEN = 1;
-    mapping(address => string) public Seekers;
-    mapping(address => uint256) public Karma;
-    mapping(address => uint256) public RoundSize;
 
-    IERC20 public dai;
-    event LiquidityAdded(address payer, uint256 amount, uint256 date);
+    struct Seeker {
+        address id;
+        uint256 karma;
+    }
+    address public Dai;
 
     constructor(address daiAddress)
         public
         ERC1155("https://game.example/api/item/{id}.json")
     {
-        dai = IERC20(daiAddress);
+        Dai = daiAddress;
     }
 
-    //Based on Karma score calculate max round size in ETH
-    function KarmaPower() internal returns (uint256) {
-        return (2);
+    IERC20 public dai = IERC20(Dai);
+
+    event FundingAdded(address payer, uint256 amount, uint256 date);
+
+    // //Based on Karma score calculate max round size in ETH
+    // function KarmaPower() internal returns (uint256) {
+    //     return (Seeker.karma);
+    // // }
+
+    function SeekFundingRound(uint256 funding) public {
+        _mint(address(this), YouOweMe_TOKEN, funding, "");
+        // if (msg.sender)
+        // RoundSize[msg.sender] = KarmaPower();
     }
 
-    function SeekFundingRound(uint256 Principle) public {
-        RoundSize[msg.sender] = KarmaPower();
+    function ApproveFunding(uint256 funding) public {
+        //dai.increaseAllowance(address(this), funding);
     }
 
-    function BecomeLP() public payable {
-        //require(LP have first shot at funding)
-        //dai.transferFrom(msg.sender, admin, amount);
-        emit LiquidityAdded(msg.sender, msg.value, block.timestamp);
-
-        uint256 UnFundedRound = 100 ether;
-        require(msg.value <= UnFundedRound, "Value exceeds roundsize");
-
-        _mint(address(this), YouOweMe_TOKEN, msg.value, "");
-
-        dai.transfer(msg.sender, msg.value);
+    function Allowance() public returns (uint256) {
+        uint256 _allowance = dai.allowance(msg.sender, address(this));
+        console.log(_allowance);
+        return _allowance;
     }
 
-    function Take() public {}
+    function DepositFunding(uint256 funding) public {
+        //dai.transfer(address(this), msg.value);
+        dai.transferFrom(msg.sender, address(this), funding);
+    }
+
+    function ClaimReward() public {
+        //LP claims reward after round sending YouOweMe_TOKEN
+    }
 
     //Seeker Fills Funds Burns YouOweMe_TOKEN Overflow is returned to LP
     function CloseFundingRound() public {
